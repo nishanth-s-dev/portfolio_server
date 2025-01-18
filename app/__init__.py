@@ -16,14 +16,11 @@ def create_app():
     port = getenv('DB_PORT', '3306')
     database = getenv('DB_NAME')
     db_url = f'mysql+pymysql://{username}:{password}@{host}:{port}/{database}'
-    print(db_url)
-
 
     connection = pymysql.connect(host=host, user=username, password=getenv("DB_PASSWORD"), port=int(port))
     with connection.cursor() as cursor:
         cursor.execute(f"CREATE DATABASE IF NOT EXISTS {database}")
     connection.close()
-
 
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
