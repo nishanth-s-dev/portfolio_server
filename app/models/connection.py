@@ -1,5 +1,4 @@
-# app/models/connection.py
-from app import db
+from . import db
 
 class Connection(db.Model):
     __tablename__ = 'connection'

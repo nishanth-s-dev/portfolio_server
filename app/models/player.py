@@ -1,4 +1,4 @@
-from app import db
+from . import db
 
 class Player(db.Model):
     __tablename__ = 'player'
