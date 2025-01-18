@@ -1,8 +1,8 @@
 from flask import Blueprint
 
-bp = Blueprint('main', __name__)
+bp = Blueprint('index', __name__, url_prefix='/api')
 
-@bp.route('/')
+@bp.route('/', methods=['GET'])
 def index():
     response_json = {
         "message": "API is up and running.",

@@ -1,33 +1,50 @@
 from app.models import player, connection_type, connection, project
 
+Player = player.Player
+ConnectionType = connection_type.ConnectionType
+Connection = connection.Connection
+Project = project.Project
+
 class InitialDBData:
     def __init__(self):
         self.players = [
-            player.Player(username='nishanth', display_name='Nishanth', description='I am a software engineer', occupation='Software Engineer', image_url='image_url_placeholder', location='Bangalore'),
+            self.create_player('nishanth', 'Nishanth', 'I am a software engineer', 'Software Engineer', 'image_url_placeholder', 'Bangalore'),
         ]
 
         self.connection_types = [
-            connection_type.ConnectionType(connection_type='Mail'),
-            connection_type.ConnectionType(connection_type='LinkedIn'),
-            connection_type.ConnectionType(connection_type='GitHub'),
+            self.create_connection_type('Mail'),
+            self.create_connection_type('LinkedIn'),
+            self.create_connection_type('GitHub'),
         ]
 
         self.connections = [
-            connection.Connection(url="mailto:nishanth.selvakumar.dev@gmail.com", connection_type_id=1, player_id=1),
-            connection.Connection(url="https://www.linkedin.com/in/nishanth-s-dev/", connection_type_id=2, player_id=1),
-            connection.Connection(url="https://github.com/nishanth-s-dev", connection_type_id=3, player_id=1),
+            self.create_connection("mailto:nishanth.selvakumar.dev@gmail.com", 1, 1),
+            self.create_connection("https://www.linkedin.com/in/nishanth-s-dev/", 2, 1),
+            self.create_connection("https://github.com/nishanth-s-dev", 3, 1),
         ]
 
         self.projects = [
-            project.Project(player_id=1, title='Project 1', image_url='image_url_placeholder', description='Description 1', tech_stack='Tech Stack 1', project_url='https://project1.com', created_on='2021-01-01 00:00:00'),
-            project.Project(player_id=1, title='Project 2', image_url='image_url_placeholder', description='Description 2', tech_stack='Tech Stack 2', project_url='https://project2.com', created_on='2021-01-02 00:00:00'),
-            project.Project(player_id=1, title='Project 3', image_url='image_url_placeholder', description='Description 3', tech_stack='Tech Stack 3', project_url='https://project3.com', created_on='2021-01-03 00:00:00'),
+            self.create_project(1, 'Project 1', 'image_url_placeholder', 'Description 1', 'Tech Stack 1', 'https://project1.com', '2021-01-01 00:00:00'),
+            self.create_project(1, 'Project 2', 'image_url_placeholder', 'Description 2', 'Tech Stack 2', 'https://project2.com', '2021-01-02 00:00:00'),
+            self.create_project(1, 'Project 3', 'image_url_placeholder', 'Description 3', 'Tech Stack 3', 'https://project3.com', '2021-01-03 00:00:00'),
         ]
 
-    def get_initial_data(self):
+    def create_player(self, username: str, display_name: str, description: str, occupation: str, image_url: str, location: str) -> Player:
+        return Player(username=username, display_name=display_name, description=description, occupation=occupation, image_url=image_url, location=location)
+
+    def create_connection_type(self, connection_type: str) -> ConnectionType:
+        return ConnectionType(connection_type=connection_type)
+
+    def create_connection(self, url: str, connection_type_id: int, player_id: int) -> Connection:
+        return Connection(url=url, connection_type_id=connection_type_id, player_id=player_id)
+
+    def create_project(self, player_id: int, title: str, image_url: str, description: str, tech_stack: str, project_url: str, created_on: str) -> Project:
+        return Project(player_id=player_id, title=title, image_url=image_url, description=description, tech_stack=tech_stack, project_url=project_url, created_on=created_on)
+
+    def get_initial_data(self) -> dict:
         return {
-            'players': self.players,
-            'connection_types': self.connection_types,
-            'connections': self.connections,
-            'projects': self.projects,
+            Player: self.players,
+            ConnectionType: self.connection_types,
+            Connection: self.connections,
+            Project: self.projects,
         }
