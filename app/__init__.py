@@ -1,12 +1,18 @@
 from flask import Flask
 from .utils.dbutil import DBUtil
-from . import routes
+from .utils.routeutil import RouteUtil
+from .routes import index
+from .initial_db_data import InitialDBData
 
 def create_app():
     app = Flask(__name__)
 
     dbutil = DBUtil()
-    dbutil.initialize(app)
+    with app.app_context():
+        dbutil.initialize(app)
+        dbutil.load_initial_data(InitialDBData().get_initial_data())
 
-    app.register_blueprint(routes.bp)
+    routeutil = RouteUtil()
+    routeutil.register_blueprints(app)
+
     return app

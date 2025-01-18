@@ -41,14 +41,28 @@ class DBUtil:
             # Triggering every model | without this, models/tables won't be created
             importlib.import_module('app.models')
 
-            with app.app_context():
-                self.db.init_app(app)
-                self.db.create_all()
-                self.logger.info("Database connected successfully and tables created.")
+            self.db.init_app(app)
+            self.db.create_all()
+            # self.load_initial_data()
+            self.logger.info("Database connected successfully and tables created.")
+
         except MySQLError as e:
             self.logger.error("Database initialization failed", exc_info=True)
         except Exception as e:
             self.logger.error("An unexpected error occurred", exc_info=True)
+
+    def load_initial_data(self, initial_data=None):
+        if initial_data is None:
+            initial_data = dict()
+        try:
+            for model_data in initial_data.values():
+                print(model_data)
+                for data in model_data:
+                    self.db.session.add(data)
+                self.db.session.commit()
+            self.logger.info("Initial data loaded successfully.")
+        except Exception as e:
+            self.logger.error("Failed to load initial data", exc_info=True)
 
     def __get_db_url_with_url_encoding(self):
         details = self.database_connectivity_details
@@ -66,3 +80,5 @@ class DBUtil:
             self.logger.error("Failed to create database", exc_info=True)
         except Exception as e:
             self.logger.error("An unexpected error occurred", exc_info=True)
+
+
