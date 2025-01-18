@@ -5,6 +5,7 @@ from urllib.parse import quote_plus
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from .constants import DBConstants
+import importlib
 
 load_dotenv()
 
@@ -38,7 +39,7 @@ class DBUtil:
             app.config[DBConstants.SQLALCHEMY_TRACK_MODIFICATIONS] = False
 
             # Triggering every model | without this, models/tables won't be created
-            from app.models import Project, Connection, Player, ConnectionType
+            importlib.import_module('app.models')
 
             with app.app_context():
                 self.db.init_app(app)
