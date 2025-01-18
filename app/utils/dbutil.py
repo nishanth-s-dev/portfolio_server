@@ -56,7 +56,7 @@ class DBUtil:
             initial_data = dict()
         try:
             for model, model_data in initial_data.items():
-                if self.query_with_model(model).count() == 0:
+                if self.execute_query(model).count() == 0:
                     for data in model_data:
                         self.db.session.add(data)
                     self.db.session.commit()
@@ -64,7 +64,7 @@ class DBUtil:
         except Exception as e:
             self.logger.error("Failed to load initial data", exc_info=True)
 
-    def query_with_model(self, model):
+    def execute_query(self, model):
         return self.db.session.query(model)
 
     def __get_db_url_with_url_encoding(self):

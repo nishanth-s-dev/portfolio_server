@@ -8,3 +8,9 @@ class ConnectionType(db.Model):
 
     def __repr__(self):
         return f"ConnectionType('{self.connection_type}')"
+
+    def to_dict(self):
+        return {
+            "connection_type_id": self.connection_type_id,
+            "connection_type": self.connection_type
+        }

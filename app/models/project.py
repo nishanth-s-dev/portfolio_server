@@ -14,3 +14,15 @@ class Project(db.Model):
 
     def __repr__(self):
         return f"Project('{self.title}', '{self.description}', '{self.image_url}', '{self.project_url}')"
+
+    def to_dict(self):
+        return {
+            "project_id": self.project_id,
+            "player_id": self.player_id,
+            "title": self.title,
+            "image_url": self.image_url,
+            "description": self.description,
+            "tech_stack": self.tech_stack,
+            "project_url": self.project_url,
+            "created_on": self.created_on
+        }

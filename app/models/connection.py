@@ -10,3 +10,11 @@ class Connection(db.Model):
 
     def __repr__(self):
         return f"Connection('{self.url}')"
+
+    def to_dict(self):
+        return {
+            "connection_id": self.connection_id,
+            "url": self.url,
+            "connection_type_id": self.connection_type_id,
+            "player_id": self.player_id
+        }

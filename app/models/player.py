@@ -13,3 +13,14 @@ class Player(db.Model):
 
     def __repr__(self):
         return f"Player('{self.username}', '{self.display_name}', '{self.description}', '{self.occupation}', '{self.image_url}', '{self.location}')"
+
+    def to_dict(self):
+        return {
+            "player_id": self.player_id,
+            "username": self.username,
+            "display_name": self.display_name,
+            "description": self.description,
+            "occupation": self.occupation,
+            "image_url": self.image_url,
+            "location": self.location
+        }
